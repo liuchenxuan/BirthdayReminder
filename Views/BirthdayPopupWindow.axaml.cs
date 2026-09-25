@@ -33,6 +33,9 @@ public partial class BirthdayPopupWindow : Window
         TitleText.Text = title;
         ContentText.Text = content;
         EmojiText.Text = isTodayCelebration ? "🎉" : "🎂";
+        // 光晕的呼吸动画由 celebrate 样式类驱动。样式动画的优先级高于本地值（直接设置 Opacity 压不住它），
+        // 所以通过增删该类来控制：仅在生日当天添加。
+        GlowBorder.Classes.Set("celebrate", isTodayCelebration);
         GlowBorder.Opacity = isTodayCelebration ? 1 : 0;
         RootCard.Background = isTodayCelebration
             ? new SolidColorBrush(Color.Parse("#F2C8501C"))

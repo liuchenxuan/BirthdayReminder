@@ -35,14 +35,16 @@
     </Window.Styles>
 
     <Grid>
-        <!-- 生日当天的发光光晕，仅当 Classes 包含 celebrate 时可见 -->
+        <!-- 生日当天的发光光晕，仅当 Classes 包含 celebrate 时可见。
+             celebrate 类由代码（SetContent）在生日当天添加，不要在这里写死，否则每次弹窗都会闪烁 -->
         <Border Name="GlowBorder"
-                Classes="celebrate"
                 Background="#FFC94D"
                 CornerRadius="18"
                 Opacity="0"
                 Margin="-6" />
 
+        <!-- 注意：Avalonia 的 RenderTransformOrigin 要写成百分比；
+             写 "0.5,0.5" 表示 0.5 像素（几乎就是左上角），缩放动画会从左上角展开 -->
         <Border Name="RootCard"
                 Background="#F2222831"
                 CornerRadius="16"
@@ -50,7 +52,7 @@
                 BoxShadow="0 8 24 0 #40000000"
                 Opacity="0"
                 RenderTransform="scale(0.85)"
-                RenderTransformOrigin="0.5,0.5"
+                RenderTransformOrigin="50%,50%"
                 PointerPressed="RootCard_OnPointerPressed">
             <Border.Transitions>
                 <Transitions>
