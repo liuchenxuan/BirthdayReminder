@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Timers;
 using ClassIsland.BirthdayReminder.Helpers;
 using ClassIsland.BirthdayReminder.Models;
 using ClassIsland.BirthdayReminder.Services.NotificationProviders;
@@ -10,6 +9,12 @@ using ClassIsland.Core.Abstractions.Services.NotificationProviders;
 using ClassIsland.Core.Models.Notification;
 using ClassIsland.Shared;
 using ClassIsland.Shared.Models.Notification;
+// 项目开启了 ImplicitUsings（会隐式 global using System.Threading），
+// System.Threading.Timer 与 System.Timers.Timer 同名会产生歧义（CS0104），这里显式指定使用 System.Timers.Timer。
+using Timer = System.Timers.Timer;
+// ClassIsland.Shared.Models.Notification 中还有一个已弃用的同名 NotificationRequest（v1），
+// 这里显式指定使用 v2 版本的提醒请求，避免歧义（CS0104）。
+using NotificationRequest = ClassIsland.Core.Models.Notification.NotificationRequest;
 
 namespace ClassIsland.BirthdayReminder.Services;
 
@@ -153,7 +158,10 @@ public class BirthdayReminderEngine
 
         if (settings.IsDesktopPopupEnabled)
         {
-            _popupService.Show(title, body, isTodayCelebration, settings.DesktopPopupDurationSeconds);
+            // 光晕动画受“生日当天播放特殊动画”开关控制（该开关的说明是同时加强弹窗与横幅的强调效果）
+            _popupService.Show(title, body, isTodayCelebration,
+                playCelebrationAnimation: isTodayCelebration && settings.IsTodaySpecialAnimationEnabled,
+                settings.DesktopPopupDurationSeconds);
         }
 
         if (settings.IsSpeechEnabled)
@@ -232,7 +240,7 @@ public class BirthdayReminderEngine
         switch (channel)
         {
             case "popup":
-                _popupService.Show(title, body, false, _storage.Settings.DesktopPopupDurationSeconds);
+                _popupService.Show(title, body, isTodayCelebration: false, playCelebrationAnimation: false, _storage.Settings.DesktopPopupDurationSeconds);
                 break;
             case "speech":
                 SpeakSafely(body);
@@ -242,7 +250,8 @@ public class BirthdayReminderEngine
                 break;
             case "fullscreen":
             case "today":
-                _popupService.Show(title, body, true, _storage.Settings.DesktopPopupDurationSeconds);
+                // 测试按钮用于预览完整效果，与横幅/语音测试一样不受开关影响
+                _popupService.Show(title, body, isTodayCelebration: true, playCelebrationAnimation: true, _storage.Settings.DesktopPopupDurationSeconds);
                 SpeakSafely(body);
                 DispatchBannerOnly(title, body, true);
                 break;

@@ -31,7 +31,9 @@ public partial class BirthdaySettingsPage : SettingsPageBase, INotifyPropertyCha
     private readonly BirthdayReminderEngine _engine;
     private readonly DispatcherTimer _uiTimer;
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+    // AvaloniaObject 本身已有一个同名的 PropertyChanged 事件（类型为 EventHandler<AvaloniaPropertyChangedEventArgs>），
+    // 这里是有意用 INotifyPropertyChanged 的事件将其隐藏，供界面绑定使用，因此显式加上 new 关键字（消除 CS0108 警告）。
+    public new event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string? name = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

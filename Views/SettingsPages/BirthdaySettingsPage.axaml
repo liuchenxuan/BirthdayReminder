@@ -6,23 +6,22 @@
              xmlns:ci="clr-namespace:ClassIsland.Core.Controls;assembly=ClassIsland.Core"
              xmlns:ci2="clr-namespace:ClassIsland.Core.Abstractions.Controls;assembly=ClassIsland.Core"
              mc:Ignorable="d" d:DesignWidth="820" d:DesignHeight="900"
-             x:Class="ClassIsland.BirthdayReminder.Views.SettingsPages.BirthdaySettingsPage"
-             Title="生日提醒">
+             x:Class="ClassIsland.BirthdayReminder.Views.SettingsPages.BirthdaySettingsPage">
     <ScrollViewer>
         <StackPanel Margin="4,4,16,24" Spacing="6">
 
-            <fa:FAInfoBar Severity="Informational"
-                          Title="生日提醒插件"
-                          Message="从 Excel 导入姓名与生日，自动计算年龄与倒计时；仅支持公历（阳历）生日，不支持农历；同一次检查中触发的多条生日会自动合并为一条提醒，且不会重复提醒。"
-                          IsClosable="False" IsOpen="True" Margin="0,0,0,8" />
+            <fa:InfoBar Severity="Informational"
+                        Title="生日提醒插件"
+                        Message="从 Excel 导入姓名与生日，自动计算年龄与倒计时；仅支持公历（阳历）生日，不支持农历；同一次检查中触发的多条生日会自动合并为一条提醒，且不会重复提醒。"
+                        IsClosable="False" IsOpen="True" Margin="0,0,0,8" />
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xEF27;}"
-                                    Header="启用生日提醒插件"
-                                    Description="关闭后将停止一切生日检查与提醒">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xEF27;}"
+                                  Header="启用生日提醒插件"
+                                  Description="关闭后将停止一切生日检查与提醒">
+                <fa:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding IsPluginEnabled, Mode=TwoWay}" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
             <!-- ============ 总览 ============ -->
             <TextBlock Text="总览" FontWeight="Bold" FontSize="16" Margin="4,16,0,4" />
@@ -66,61 +65,61 @@
             <!-- ============ 提醒方式 ============ -->
             <TextBlock Text="提醒方式" FontWeight="Bold" FontSize="16" Margin="4,16,0,4" />
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xF485;}"
-                                    Header="桌面弹窗"
-                                    Description="在屏幕右下角弹出独立的提醒窗口，不依赖 ClassIsland 横幅">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xF485;}"
+                                  Header="桌面弹窗"
+                                  Description="在屏幕右下角弹出独立的提醒窗口，不依赖 ClassIsland 横幅">
+                <fa:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding IsDesktopPopupEnabled, Mode=TwoWay}" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xECF8;}"
-                                    Header="ClassIsland 横幅提醒"
-                                    Description="通过 ClassIsland 内置的提醒横幅展示">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xECF8;}"
+                                  Header="ClassIsland 横幅提醒"
+                                  Description="通过 ClassIsland 内置的提醒横幅展示">
+                <fa:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding IsBannerEnabled, Mode=TwoWay}" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xED39;}"
-                                    Header="全屏强调动画"
-                                    Description="提醒时强制使用 ClassIsland 的全屏强调特效（需要横幅提醒开启才会显示）">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xED39;}"
+                                  Header="全屏强调动画"
+                                  Description="提醒时强制使用 ClassIsland 的全屏强调特效（需要横幅提醒开启才会显示）">
+                <fa:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding IsFullScreenEffectEnabled, Mode=TwoWay}" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xE224;}"
-                                    Header="语音播报"
-                                    Description="使用 ClassIsland 的语音服务朗读提醒内容">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xE224;}"
+                                  Header="语音播报"
+                                  Description="使用 ClassIsland 的语音服务朗读提醒内容">
+                <fa:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding IsSpeechEnabled, Mode=TwoWay}" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xE58F;}"
-                                    Header="生日当天播放特殊动画"
-                                    Description="生日当天会额外加强弹窗与横幅的强调效果">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xE58F;}"
+                                  Header="生日当天播放特殊动画"
+                                  Description="生日当天会额外加强弹窗与横幅的强调效果">
+                <fa:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding IsTodaySpecialAnimationEnabled, Mode=TwoWay}" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xEE83;}"
-                                    Header="桌面弹窗显示时长"
-                                    Description="单位：秒">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xEE83;}"
+                                  Header="桌面弹窗显示时长"
+                                  Description="单位：秒">
+                <fa:SettingsExpander.Footer>
                     <NumericUpDown Value="{Binding DesktopPopupDurationSeconds, Mode=TwoWay}" Minimum="3" Maximum="60" Increment="1" FormatString="0" Width="140" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
-            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xEFBD;}"
-                                    Header="检查频率"
-                                    Description="每隔多少秒检查一次是否有生日需要提醒，单位：秒">
-                <fa:FASettingsExpander.Footer>
+            <fa:SettingsExpander IconSource="{ci:FluentIconSource &#xEFBD;}"
+                                  Header="检查频率"
+                                  Description="每隔多少秒检查一次是否有生日需要提醒，单位：秒">
+                <fa:SettingsExpander.Footer>
                     <NumericUpDown Value="{Binding CheckIntervalSeconds, Mode=TwoWay}" Minimum="10" Maximum="3600" Increment="10" FormatString="0" Width="140" />
-                </fa:FASettingsExpander.Footer>
-            </fa:FASettingsExpander>
+                </fa:SettingsExpander.Footer>
+            </fa:SettingsExpander>
 
             <TextBlock Text="测试效果" FontWeight="Bold" Margin="4,12,0,4" />
             <WrapPanel>

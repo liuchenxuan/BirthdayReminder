@@ -60,12 +60,12 @@ public class BirthdayStorageService
 
     public void SavePeople()
     {
-        ConfigureFileHelper.SaveConfig(PeopleFilePath, People.ToList(), true);
+        ConfigureFileHelper.SaveConfig(PeopleFilePath, People.ToList());
     }
 
     public void SaveSettings()
     {
-        ConfigureFileHelper.SaveConfig(SettingsFilePath, Settings, true);
+        ConfigureFileHelper.SaveConfig(SettingsFilePath, Settings);
     }
 
     #endregion
@@ -295,7 +295,7 @@ public class BirthdayStorageService
         // 只保留最近 400 天的记录，避免文件无限增长
         var cutoff = DateTime.Now.AddDays(-400);
         var filtered = log.Where(e => DateTime.TryParse(e.FiredOnDate, out var d) && d >= cutoff).ToList();
-        ConfigureFileHelper.SaveConfig(LogFilePath, filtered, true);
+        ConfigureFileHelper.SaveConfig(LogFilePath, filtered);
     }
 
     #endregion

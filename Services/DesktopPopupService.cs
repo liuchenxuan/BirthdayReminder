@@ -15,14 +15,19 @@ public class DesktopPopupService
     /// <summary>
     /// 显示一个桌面弹窗
     /// </summary>
-    public void Show(string title, string content, bool isTodayCelebration, int durationSeconds)
+    /// <param name="title">标题</param>
+    /// <param name="content">正文</param>
+    /// <param name="isTodayCelebration">是否是生日当天（使用更醒目的图标与配色）</param>
+    /// <param name="playCelebrationAnimation">是否播放光晕呼吸动画</param>
+    /// <param name="durationSeconds">自动关闭时间（秒）</param>
+    public void Show(string title, string content, bool isTodayCelebration, bool playCelebrationAnimation, int durationSeconds)
     {
         Dispatcher.UIThread.Post(() =>
         {
             try
             {
                 var window = new BirthdayPopupWindow();
-                window.SetContent(title, content, isTodayCelebration, durationSeconds);
+                window.SetContent(title, content, isTodayCelebration, playCelebrationAnimation, durationSeconds);
                 window.Closed += (_, _) => _activeWindows.Remove(window);
                 _activeWindows.Add(window);
                 window.Show();

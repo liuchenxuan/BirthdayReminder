@@ -3,10 +3,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ci="clr-namespace:ClassIsland.Core.Controls;assembly=ClassIsland.Core"
-        mc:Ignorable="d" d:DesignWidth="360" d:DesignHeight="150"
+        mc:Ignorable="d" d:DesignWidth="392" d:DesignHeight="182"
         x:Class="ClassIsland.BirthdayReminder.Views.BirthdayPopupWindow"
         Title="生日提醒"
-        Width="360"
+        Width="392"
         SizeToContent="Height"
         CanResize="False"
         ShowInTaskbar="False"
@@ -34,10 +34,26 @@
         </Style>
     </Window.Styles>
 
-    <Grid>
-        <!-- 生日当天的发光光晕，仅当 Classes 包含 celebrate 时可见 -->
+    <!-- PopupRoot 说明：
+         1. Margin="16" 在卡片四周留出透明边距，给光晕（向外扩 6）和卡片阴影留出绘制空间，否则会被窗口边缘裁掉。
+            窗口宽度 392 = 卡片宽度 360 + 左右边距 16 × 2。修改边距时，请同步修改窗口 Width 和代码中的 ContentMargin。
+         2. 淡入淡出和缩放动画放在这一层，光晕会和卡片一起渐变、缩放，打开/关闭时不会单独露出一块光晕底色。
+         3. Avalonia 的 RenderTransformOrigin 要写成百分比；写 "0.5,0.5" 表示 0.5 像素（几乎就是左上角）。 -->
+    <Panel Name="PopupRoot"
+           Margin="16"
+           Opacity="0"
+           RenderTransform="scale(0.85)"
+           RenderTransformOrigin="50%,50%">
+        <Panel.Transitions>
+            <Transitions>
+                <DoubleTransition Property="Opacity" Duration="0:0:0.32" />
+                <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.32" Easing="CubicEaseOut" />
+            </Transitions>
+        </Panel.Transitions>
+
+        <!-- 生日当天的发光光晕，仅当 Classes 包含 celebrate 时可见。
+             celebrate 类由代码（SetContent）按需添加，不要在这里写死，否则每次弹窗都会闪烁 -->
         <Border Name="GlowBorder"
-                Classes="celebrate"
                 Background="#FFC94D"
                 CornerRadius="18"
                 Opacity="0"
@@ -48,17 +64,7 @@
                 CornerRadius="16"
                 Padding="16"
                 BoxShadow="0 8 24 0 #40000000"
-                Opacity="0"
-                RenderTransform="scale(0.85)"
-                RenderTransformOrigin="0.5,0.5"
                 PointerPressed="RootCard_OnPointerPressed">
-            <Border.Transitions>
-                <Transitions>
-                    <DoubleTransition Property="Opacity" Duration="0:0:0.32" />
-                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.32" Easing="CubicEaseOut" />
-                </Transitions>
-            </Border.Transitions>
-
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <Border Width="48" Height="48" CornerRadius="24" Background="#FFB13D" VerticalAlignment="Top">
                     <TextBlock Name="EmojiText" Text="🎂" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -70,5 +76,5 @@
                 </StackPanel>
             </StackPanel>
         </Border>
-    </Grid>
+    </Panel>
 </Window>
