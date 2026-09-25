@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ci="clr-namespace:ClassIsland.Core.Controls;assembly=ClassIsland.Core"
+        mc:Ignorable="d" d:DesignWidth="420" d:DesignHeight="560"
+        x:Class="ClassIsland.BirthdayReminder.Views.PersonEditWindow"
+        Title="编辑生日记录"
+        Width="440"
+        SizeToContent="Height"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner">
+    <ScrollViewer MaxHeight="640">
+        <StackPanel Margin="20" Spacing="10">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <ci:FluentIcon Glyph="&#xE9A8;" FontSize="22" VerticalAlignment="Center" />
+                <TextBlock Name="HeaderText" Text="添加生日记录" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" />
+            </StackPanel>
+
+            <TextBlock Text="姓名" />
+            <TextBox Name="NameBox" Watermark="请输入姓名" />
+
+            <CheckBox Name="KnownYearCheck" Content="已知出生年份（用于自动计算年龄）" IsChecked="True" />
+
+            <Grid ColumnDefinitions="*,*,*" >
+                <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,6,0">
+                    <TextBlock Text="出生年份" />
+                    <NumericUpDown Name="YearBox" Minimum="1900" Maximum="2100" Increment="1" FormatString="0" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="4" Margin="6,0">
+                    <TextBlock Text="月" />
+                    <NumericUpDown Name="MonthBox" Minimum="1" Maximum="12" Increment="1" FormatString="0" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="4" Margin="6,0,0,0">
+                    <TextBlock Text="日" />
+                    <NumericUpDown Name="DayBox" Minimum="1" Maximum="31" Increment="1" FormatString="0" />
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Text="分类" />
+            <ComboBox Name="CategoryBox" IsEditable="True" HorizontalAlignment="Stretch" />
+
+            <TextBlock Text="备注" />
+            <TextBox Name="NotesBox" AcceptsReturn="True" Height="60" TextWrapping="Wrap" />
+
+            <TextBlock Text="提醒时机（可多选，0 = 当天）" FontWeight="Bold" Margin="0,8,0,0" />
+            <WrapPanel>
+                <CheckBox Name="Offset0Check" Content="当天" Margin="0,0,10,4" />
+                <CheckBox Name="Offset1Check" Content="提前1天" Margin="0,0,10,4" />
+                <CheckBox Name="Offset3Check" Content="提前3天" Margin="0,0,10,4" />
+                <CheckBox Name="Offset7Check" Content="提前7天" Margin="0,0,10,4" />
+                <CheckBox Name="Offset30Check" Content="提前30天" Margin="0,0,10,4" />
+            </WrapPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <CheckBox Name="CustomOffsetCheck" Content="自定义提前天数" VerticalAlignment="Center" />
+                <NumericUpDown Name="CustomOffsetBox" Minimum="1" Maximum="365" Increment="1" FormatString="0" Width="140" />
+            </StackPanel>
+
+            <CheckBox Name="EnabledCheck" Content="启用这条记录的提醒" IsChecked="True" Margin="0,8,0,0" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,16,0,0">
+                <Button Content="取消" Click="CancelButton_OnClick" />
+                <Button Content="保存" Classes="accent" Click="SaveButton_OnClick" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

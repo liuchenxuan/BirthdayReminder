@@ -1,0 +1,7 @@
+D:\project\Shengri\1\classisland-birthday-reminder-plugin\classisland-plugin\BirthdayReminder\obj\Release\net8.0\BirthdayReminder.csproj.AssemblyReference.cache
+D:\project\Shengri\1\classisland-birthday-reminder-plugin\classisland-plugin\BirthdayReminder\obj\Release\net8.0\Avalonia\Resources.Inputs.cache
+D:\project\Shengri\1\classisland-birthday-reminder-plugin\classisland-plugin\BirthdayReminder\obj\Release\net8.0\Avalonia\resources
+D:\project\Shengri\1\classisland-birthday-reminder-plugin\classisland-plugin\BirthdayReminder\obj\Release\net8.0\BirthdayReminder.GeneratedMSBuildEditorConfig.editorconfig
+D:\project\Shengri\1\classisland-birthday-reminder-plugin\classisland-plugin\BirthdayReminder\obj\Release\net8.0\BirthdayReminder.AssemblyInfoInputs.cache
+D:\project\Shengri\1\classisland-birthday-reminder-plugin\classisland-plugin\BirthdayReminder\obj\Release\net8.0\BirthdayReminder.AssemblyInfo.cs
+D:\project\Shengri\1\classisland-birthday-reminder-plugin\classisland-plugin\BirthdayReminder\obj\Release\net8.0\BirthdayReminder.csproj.CoreCompileInputs.cache

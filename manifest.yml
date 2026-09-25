@@ -1,0 +1,15 @@
+# nonk8s
+# 插件清单文件使用 YAML 格式存储。
+# YAML 教程：https://www.runoob.com/w3cnote/yaml-intro.html
+# 插件清单格式：https://docs.classisland.tech/dev/plugins/create-project.html
+
+id: tech.classisland.plugin.birthdayreminder
+name: 生日提醒
+description: 从 Excel 导入姓名与生日，自动计算年龄与倒计时，在生日临近/当天通过桌面弹窗、ClassIsland 横幅、全屏强调动画与语音播报进行提醒，支持自定义提醒规则、防重复提醒与生日合并通知。
+entranceAssembly: "ClassIsland.BirthdayReminder.dll"
+url: https://github.com/your-name/BirthdayReminder
+author: 你的名字
+version: 1.0.0.0
+apiVersion: 2.0.0.0
+icon: icon.png
+readme: README.md

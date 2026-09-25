@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ClassIsland.BirthdayReminder</RootNamespace>
+        <AssemblyName>ClassIsland.BirthdayReminder</AssemblyName>
+        <!-- 允许插件被 ClassIsland 动态加载 -->
+        <EnableDynamicLoading>True</EnableDynamicLoading>
+        <AvaloniaUseCompiledBindingsByDefault>False</AvaloniaUseCompiledBindingsByDefault>
+        <!-- 关闭可空引用警告变为错误，方便初学者构建 -->
+        <WarningsAsErrors></WarningsAsErrors>
+        <NoWarn>CS8618;CS8602;CS8604;CS8600</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <!-- 插件面向的 ClassIsland.PluginSdk 版本。如果 SDK 有更新，可以修改这里的版本号。 -->
+        <ClassIslandPluginSdkVersion>2.0.0.*</ClassIslandPluginSdkVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- ClassIsland 插件 SDK。运行时由 ClassIsland 本体提供，因此排除 runtime 与 native 资源，
+             避免这些依赖被打包进插件输出目录，与本体版本冲突。 -->
+        <PackageReference Include="ClassIsland.PluginSdk" Version="$(ClassIslandPluginSdkVersion)">
+            <ExcludeAssets>runtime; native</ExcludeAssets>
+        </PackageReference>
+        <!-- 用于读写 Excel (.xlsx) 文件的开源库，纯托管代码，无需额外的本机组件 -->
+        <PackageReference Include="ClosedXML" Version="0.104.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="manifest.yml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="README.md">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="icon.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

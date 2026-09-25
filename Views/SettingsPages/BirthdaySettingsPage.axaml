@@ -1,0 +1,208 @@
+<ci2:SettingsPageBase xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:fa="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             xmlns:ci="clr-namespace:ClassIsland.Core.Controls;assembly=ClassIsland.Core"
+             xmlns:ci2="clr-namespace:ClassIsland.Core.Abstractions.Controls;assembly=ClassIsland.Core"
+             mc:Ignorable="d" d:DesignWidth="820" d:DesignHeight="900"
+             x:Class="ClassIsland.BirthdayReminder.Views.SettingsPages.BirthdaySettingsPage"
+             Title="生日提醒">
+    <ScrollViewer>
+        <StackPanel Margin="4,4,16,24" Spacing="6">
+
+            <fa:FAInfoBar Severity="Informational"
+                          Title="生日提醒插件"
+                          Message="从 Excel 导入姓名与生日，自动计算年龄与倒计时；仅支持公历（阳历）生日，不支持农历；同一次检查中触发的多条生日会自动合并为一条提醒，且不会重复提醒。"
+                          IsClosable="False" IsOpen="True" Margin="0,0,0,8" />
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xEF27;}"
+                                    Header="启用生日提醒插件"
+                                    Description="关闭后将停止一切生日检查与提醒">
+                <fa:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IsPluginEnabled, Mode=TwoWay}" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <!-- ============ 总览 ============ -->
+            <TextBlock Text="总览" FontWeight="Bold" FontSize="16" Margin="4,16,0,4" />
+            <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" CornerRadius="8" Padding="16">
+                <StackPanel Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <ci:FluentIcon Glyph="&#xE0FF;" FontSize="24" VerticalAlignment="Center" />
+                        <StackPanel>
+                            <TextBlock Text="下一个生日" FontSize="12" Opacity="0.7" />
+                            <TextBlock Text="{Binding NextBirthdayText}" FontSize="16" FontWeight="Bold" />
+                        </StackPanel>
+                        <Button Content="刷新总览" Click="RefreshDashboardButton_OnClick" Margin="24,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <Separator />
+
+                    <TextBlock Text="今日寿星" FontWeight="Bold" />
+                    <ItemsControl ItemsSource="{Binding TodayBirthdayNames}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="0,2" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="今天没有人过生日" IsVisible="{Binding HasNoTodayBirthday}" Opacity="0.6" />
+
+                    <Separator />
+
+                    <TextBlock Text="本月生日列表" FontWeight="Bold" />
+                    <ItemsControl ItemsSource="{Binding ThisMonthBirthdays}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="0,2" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="本月没有人过生日" IsVisible="{Binding HasNoMonthBirthday}" Opacity="0.6" />
+                </StackPanel>
+            </Border>
+
+            <!-- ============ 提醒方式 ============ -->
+            <TextBlock Text="提醒方式" FontWeight="Bold" FontSize="16" Margin="4,16,0,4" />
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xF485;}"
+                                    Header="桌面弹窗"
+                                    Description="在屏幕右下角弹出独立的提醒窗口，不依赖 ClassIsland 横幅">
+                <fa:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IsDesktopPopupEnabled, Mode=TwoWay}" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xECF8;}"
+                                    Header="ClassIsland 横幅提醒"
+                                    Description="通过 ClassIsland 内置的提醒横幅展示">
+                <fa:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IsBannerEnabled, Mode=TwoWay}" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xED39;}"
+                                    Header="全屏强调动画"
+                                    Description="提醒时强制使用 ClassIsland 的全屏强调特效（需要横幅提醒开启才会显示）">
+                <fa:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IsFullScreenEffectEnabled, Mode=TwoWay}" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xE224;}"
+                                    Header="语音播报"
+                                    Description="使用 ClassIsland 的语音服务朗读提醒内容">
+                <fa:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IsSpeechEnabled, Mode=TwoWay}" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xE58F;}"
+                                    Header="生日当天播放特殊动画"
+                                    Description="生日当天会额外加强弹窗与横幅的强调效果">
+                <fa:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IsTodaySpecialAnimationEnabled, Mode=TwoWay}" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xEE83;}"
+                                    Header="桌面弹窗显示时长"
+                                    Description="单位：秒">
+                <fa:FASettingsExpander.Footer>
+                    <NumericUpDown Value="{Binding DesktopPopupDurationSeconds, Mode=TwoWay}" Minimum="3" Maximum="60" Increment="1" FormatString="0" Width="140" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <fa:FASettingsExpander IconSource="{ci:FluentIconSource &#xEFBD;}"
+                                    Header="检查频率"
+                                    Description="每隔多少秒检查一次是否有生日需要提醒，单位：秒">
+                <fa:FASettingsExpander.Footer>
+                    <NumericUpDown Value="{Binding CheckIntervalSeconds, Mode=TwoWay}" Minimum="10" Maximum="3600" Increment="10" FormatString="0" Width="140" />
+                </fa:FASettingsExpander.Footer>
+            </fa:FASettingsExpander>
+
+            <TextBlock Text="测试效果" FontWeight="Bold" Margin="4,12,0,4" />
+            <WrapPanel>
+                <Button Content="测试桌面弹窗" Click="TestPopupButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="测试横幅提醒" Click="TestBannerButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="测试全屏强调动画" Click="TestFullScreenButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="测试语音播报" Click="TestSpeechButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="测试生日当天完整效果" Classes="accent" Click="TestTodayButton_OnClick" Margin="0,0,8,8" />
+            </WrapPanel>
+
+            <!-- ============ 提醒文案 ============ -->
+            <TextBlock Text="提醒文案模板" FontWeight="Bold" FontSize="16" Margin="4,16,0,4" />
+            <TextBlock Text="可用占位符：{name} 姓名　{age} 年龄　{ageText} 年龄描述　{category} 分类　{days} 倒计时天数　{date} 生日日期"
+                       TextWrapping="Wrap" Opacity="0.7" FontSize="12" />
+            <TextBlock Text="生日当天使用的模板" Margin="0,8,0,2" />
+            <TextBox Text="{Binding TemplateOnDay, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Height="50" />
+            <TextBlock Text="提前提醒使用的模板" Margin="0,8,0,2" />
+            <TextBox Text="{Binding TemplateBefore, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" Height="50" />
+
+            <TextBlock Text="新增记录默认提醒时机（0 = 当天）" Margin="0,12,0,4" />
+            <WrapPanel>
+                <CheckBox Content="当天" IsChecked="{Binding DefaultOffset0, Mode=TwoWay}" Margin="0,0,10,4" />
+                <CheckBox Content="提前1天" IsChecked="{Binding DefaultOffset1, Mode=TwoWay}" Margin="0,0,10,4" />
+                <CheckBox Content="提前3天" IsChecked="{Binding DefaultOffset3, Mode=TwoWay}" Margin="0,0,10,4" />
+                <CheckBox Content="提前7天" IsChecked="{Binding DefaultOffset7, Mode=TwoWay}" Margin="0,0,10,4" />
+                <CheckBox Content="提前30天" IsChecked="{Binding DefaultOffset30, Mode=TwoWay}" Margin="0,0,10,4" />
+            </WrapPanel>
+            <Button Content="保存文案与默认提醒时机设置" Click="SaveTemplateButton_OnClick" HorizontalAlignment="Left" Margin="0,4,0,0" />
+
+            <!-- ============ 名单管理 ============ -->
+            <TextBlock Text="生日名单管理" FontWeight="Bold" FontSize="16" Margin="4,16,0,4" />
+            <Grid ColumnDefinitions="2*,1*,1.4*,Auto" Margin="0,0,0,8">
+                <TextBox Grid.Column="0" Name="SearchBox" Watermark="搜索姓名 / 分类 / 备注"
+                         Text="{Binding SearchText, Mode=TwoWay}" Margin="0,0,8,0" />
+                <ComboBox Grid.Column="1" ItemsSource="{Binding CategoryOptions}"
+                          SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" Margin="0,0,8,0" HorizontalAlignment="Stretch" />
+                <ComboBox Grid.Column="2" ItemsSource="{Binding SortOptions}"
+                          SelectedItem="{Binding SelectedSortOption, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+                <Button Grid.Column="3" Content="刷新" Click="RefreshListButton_OnClick" Margin="8,0,0,0" />
+            </Grid>
+
+            <WrapPanel Margin="0,0,0,8">
+                <Button Content="➕ 新增" Classes="accent" Click="AddButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="✏️ 编辑所选" Click="EditButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="🗑 删除所选" Click="DeleteButton_OnClick" Margin="0,0,8,8" />
+            </WrapPanel>
+
+            <DataGrid Name="PeopleGrid" ItemsSource="{Binding DisplayRows}" AutoGenerateColumns="False"
+                      IsReadOnly="True" Height="320" GridLinesVisibility="Horizontal"
+                      DoubleTapped="PeopleGrid_OnDoubleTapped">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="姓名" Binding="{Binding Name}" Width="110" />
+                    <DataGridTextColumn Header="生日" Binding="{Binding BirthdayText}" Width="140" />
+                    <DataGridTextColumn Header="年龄" Binding="{Binding AgeText}" Width="70" />
+                    <DataGridTextColumn Header="倒计时" Binding="{Binding CountdownText}" Width="110" />
+                    <DataGridTextColumn Header="分类" Binding="{Binding Category}" Width="90" />
+                    <DataGridTextColumn Header="提醒时机" Binding="{Binding OffsetsText}" Width="140" />
+                    <DataGridTextColumn Header="启用" Binding="{Binding EnabledText}" Width="70" />
+                    <DataGridTextColumn Header="备注" Binding="{Binding Notes}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock Text="提示：双击某一行可直接编辑" Opacity="0.6" FontSize="12" Margin="0,4,0,0" />
+
+            <!-- ============ 数据管理 ============ -->
+            <TextBlock Text="导入 / 导出 / 备份" FontWeight="Bold" FontSize="16" Margin="4,16,0,4" />
+            <WrapPanel>
+                <Button Content="📄 下载导入模板" Click="ExportTemplateButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="📤 导出为 Excel" Click="ExportButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="📥 导入 Excel（合并）" Click="ImportMergeButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="📥 导入 Excel（覆盖全部）" Click="ImportReplaceButton_OnClick" Margin="0,0,8,8" />
+            </WrapPanel>
+            <TextBlock Text="{Binding ImportResultText}" TextWrapping="Wrap" Foreground="{DynamicResource SystemAccentColorBrush}"
+                       IsVisible="{Binding HasImportResult}" Margin="0,0,0,8" />
+
+            <WrapPanel>
+                <Button Content="💾 立即创建备份" Click="BackupButton_OnClick" Margin="0,0,8,8" />
+                <ComboBox ItemsSource="{Binding BackupFiles}" SelectedItem="{Binding SelectedBackup, Mode=TwoWay}" MinWidth="260" Margin="0,0,8,8" />
+                <Button Content="♻ 从所选备份还原" Click="RestoreButton_OnClick" Margin="0,0,8,8" />
+                <Button Content="📂 从外部文件还原" Click="RestoreExternalButton_OnClick" Margin="0,0,8,8" />
+            </WrapPanel>
+            <TextBlock Text="{Binding BackupResultText}" TextWrapping="Wrap" Opacity="0.75" IsVisible="{Binding HasBackupResult}" />
+
+        </StackPanel>
+    </ScrollViewer>
+</ci2:SettingsPageBase>
