@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Timers;
 using ClassIsland.BirthdayReminder.Helpers;
 using ClassIsland.BirthdayReminder.Models;
 using ClassIsland.BirthdayReminder.Services.NotificationProviders;
@@ -10,6 +9,12 @@ using ClassIsland.Core.Abstractions.Services.NotificationProviders;
 using ClassIsland.Core.Models.Notification;
 using ClassIsland.Shared;
 using ClassIsland.Shared.Models.Notification;
+// 项目开启了 ImplicitUsings（会隐式 global using System.Threading），
+// System.Threading.Timer 与 System.Timers.Timer 同名会产生歧义（CS0104），这里显式指定使用 System.Timers.Timer。
+using Timer = System.Timers.Timer;
+// ClassIsland.Shared.Models.Notification 中还有一个已弃用的同名 NotificationRequest（v1），
+// 这里显式指定使用 v2 版本的提醒请求，避免歧义（CS0104）。
+using NotificationRequest = ClassIsland.Core.Models.Notification.NotificationRequest;
 
 namespace ClassIsland.BirthdayReminder.Services;
 

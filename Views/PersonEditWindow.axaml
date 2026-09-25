@@ -38,7 +38,11 @@
             </Grid>
 
             <TextBlock Text="分类" />
-            <ComboBox Name="CategoryBox" IsEditable="True" HorizontalAlignment="Stretch" />
+            <!-- Avalonia 11 的 ComboBox 不支持 IsEditable / Text（可编辑下拉框），
+                 这里使用 AutoCompleteBox：既可以从已有分类中选择，也可以直接输入新分类 -->
+            <AutoCompleteBox Name="CategoryBox" HorizontalAlignment="Stretch"
+                             MinimumPrefixLength="0" FilterMode="Contains"
+                             Watermark="选择已有分类，或直接输入新分类" />
 
             <TextBlock Text="备注" />
             <TextBox Name="NotesBox" AcceptsReturn="True" Height="60" TextWrapping="Wrap" />

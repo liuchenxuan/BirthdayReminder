@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia.Media.Transformation;
 using Avalonia.Threading;
 
 namespace ClassIsland.BirthdayReminder.Views;
@@ -74,7 +75,7 @@ public partial class BirthdayPopupWindow : Window
     private void OnOpened(object? sender, EventArgs e)
     {
         RootCard.Opacity = 1;
-        RootCard.RenderTransform = Avalonia.Media.TransformOperations.Parse("scale(1)");
+        RootCard.RenderTransform = TransformOperations.Parse("scale(1)");
     }
 
     private void RootCard_OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -86,7 +87,7 @@ public partial class BirthdayPopupWindow : Window
     private void CloseWithFade()
     {
         RootCard.Opacity = 0;
-        RootCard.RenderTransform = Avalonia.Media.TransformOperations.Parse("scale(0.9)");
+        RootCard.RenderTransform = TransformOperations.Parse("scale(0.9)");
         var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(320) };
         timer.Tick += (_, _) =>
         {
